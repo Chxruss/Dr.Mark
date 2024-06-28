@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DR. MARK - Solution Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #000000;
+            color: white;
+            padding: 1em 0;
+            text-align: center;
+            border-bottom: 2px solid #4CAF50;
+        }
+        header h1 {
+            font-size: 3em;
+            margin: 0;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2em auto;
+            padding: 2em;
+            background: #1a1a1a;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+        }
+        h2 {
+            color: #4CAF50;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        textarea {
+            margin-bottom: 1em;
+            padding: 0.5em;
+            font-size: 1em;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            background-color: #2a2a2a;
+            color: pink;
+        }
+        button {
+            padding: 0.7em;
+            font-size: 1em;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .results {
+            margin-top: 2em;
+        }
+        .results p {
+            color: #4CAF50;
+        }
+        footer {
+            text-align: center;
+            padding: 1em 0;
+            background-color: #000000;
+            color: white;
+            border-top: 2px solid #4CAF50;
+        }
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
+            max-height: 80%;
+            background: #1a1a1a;
+            color: white;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            overflow-y: auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .popup-content {
+            padding: 20px;
+        }
+        .close-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .popup-content a {
+            color: #4CAF50;
+        }
+        .popup-content a:hover {
+            text-decoration: underline;
+        }
+        .stay-healthy {
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DR. MARK</h1>
+    </header>
+    <div class="container">
+        <section class="search">
+            <h2>What's Your Problem?</h2>
+            <form id="problem-form">
+                <textarea id="problem-input" rows="5" placeholder="Describe your problem here..."></textarea>
+                <button type="submit">Find Solution</button>
+            </form>
+        </section>
+        <section class="results" id="results">
+            <h2>Solutions</h2>
+            <div id="solution-output">
+                <!-- Solutions will be displayed here -->
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2024 <a href="#" id="credits-link">DR. MARK</a>. All rights reserved.</p>
+    </footer>
+
+    <div class="popup" id="credits-popup">
+        <button class="close-btn" id="close-popup">Close</button>
+        <div class="popup-content">
+            <h1>Credits</h1>
+            <p><strong>Developer's Name:</strong> Charusmit Sharma</p>
+            <p><strong>Nationality:</strong> India</p>
+            <p>Hi, I'm Charusmit Sharma from India, an indie developer. I developed DR. MARK to help you with your normal illnesses or problems. DR. MARK is updated every week and we add 5 more new remedies of illnesses, so stay tuned!</p>
+            <p>If you wish, you can buy me a cup of coffee by donating just $2. If you want to contact me, you can email me at <a href="mailto:pufftronyt@gmail.com">pufftronyt@gmail.com</a>.</p>
+            <div class="donate">
+                <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_PAYPAL_BUTTON_ID" target="_blank">Donate $2</a>
+            </div>
+            <h2>More Information</h2>
+            <p>Thank you for using DR. MARK. We hope you find our solutions helpful. Your feedback is important to us, and we are constantly working to improve the site. If you have any suggestions or requests for new remedies, please don't hesitate to reach out.</p>
+            <p class="stay-healthy">STAY HEALTHY AND TAKE CARE!</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('credits-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('credits-popup').style.display = 'block';
+        });
+
+        document.getElementById('close-popup').addEventListener('click', function() {
+            document.getElementById('credits-popup').style.display = 'none';
+        });
+
+        document.getElementById('problem-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const problem = document.getElementById('problem-input').value;
+            if (problem.trim()) {
+                findSolution(problem);
+            }
+        });
+
+        function findSolution(problem) {
+            const solutionOutput = document.getElementById('solution-output');
+            solutionOutput.innerHTML = '<p>Searching for remedies...</p>';
+            
+            // Simulate searching for a solution based on keywords
+            setTimeout(() => {
+                const remedies = {
+                    "headache": "For a headache, try drinking plenty of water, resting in a dark room, and using a cold compress on your forehead.",
+                    "cold": "For a cold, stay hydrated, get plenty of rest, and consider using over-the-counter medications to alleviate symptoms.",
+                    "stress": "For stress, try practicing relaxation techniques such as deep breathing, meditation, or yoga. Regular physical exercise and sufficient sleep also help reduce stress.",
+                    "back pain": "For back pain, consider gentle stretching exercises, applying a heat pad, and maintaining good posture throughout the day.",
+                    "insomnia": "For insomnia, establish a regular sleep schedule, avoid caffeine before bedtime, and create a comfortable sleeping environment.",
+                    "dizziness": "For dizziness, sit or lie down immediately, drink plenty of water, and avoid sudden movements. If dizziness persists, consult a doctor.",
+                    "eye strain": "For eye strain, follow the 20-20-20 rule: every 20 minutes, look at something 20 feet away for at least 20 seconds. Ensure good lighting and take regular breaks from screens.",
+                    "muscle cramps": "For muscle cramps, gently stretch and massage the affected muscle, stay hydrated, and apply a warm compress or take a warm bath.",
+                    "fever": "For a fever, stay hydrated, rest, and take over-the-counter fever reducers like acetaminophen or ibuprofen. If the fever persists, seek medical advice."
+                };
+                
+                let found = false;
+                for (let key in remedies) {
+                    if (problem.toLowerCase().includes(key)) {
+                        solutionOutput.innerHTML = `<p>${remedies[key]}</p>`;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    solutionOutput.innerHTML = "<p>Sorry, we couldn't find a specific remedy for your problem. Please try rephrasing or providing more details.</p>";
+                }
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
